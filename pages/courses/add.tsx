@@ -15,14 +15,19 @@ export default function AddCoursePage() {
     setLoading(true)
     const userResp = await supabase.auth.getUser()
     const user = userResp.data.user
-    if (!user) {
-      setError('You must be logged in to add a course.')
+
+    // Debug log: check the user object
+    console.log('User object:', user)
+
+    if (!user || !user.id) {
+      setError('User not authenticated or user ID not found.')
       setLoading(false)
       return
     }
+
     const { error } = await supabase
       .from('courses')
-      .insert([{ name, description, created_by: user.id }])
+      .insert([{ name, description, creator_id: user.id }])
     if (error) {
       setError(error.message)
       setLoading(false)
