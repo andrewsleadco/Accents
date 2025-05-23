@@ -47,9 +47,21 @@ export default function CourseListPage() {
             Created: {new Date(course.created_at).toLocaleString()}
           </div>
           {user && course.creator_id === user.id && (
-            <Link href={`/courses/edit/${course.id}`}>
-              <button>Edit</button>
-            </Link>
+            <>
+              <Link href={`/courses/edit/${course.id}`}>
+                <button>Edit</button>
+              </Link>
+              <button
+                onClick={async () => {
+                  if (confirm('Are you sure you want to delete this course?')) {
+                    await supabase.from('courses').delete().eq('id', course.id)
+                    setCourses((prev) => prev.filter((c) => c.id !== course.id))
+                  }
+                }}
+              >
+                Delete
+              </button>
+            </>
           )}
           <hr />
         </div>
