@@ -46,6 +46,11 @@ export default function CourseListPage() {
           <div>
             Created: {new Date(course.created_at).toLocaleString()}
           </div>
+          {/* View Button (all users) */}
+          <Link href={`/courses/${course.id}`}>
+            <button>View</button>
+          </Link>
+          {/* Edit/Delete Buttons (owner only) */}
           {user && course.creator_id === user.id && (
             <>
               <Link href={`/courses/edit/${course.id}`}>
@@ -69,4 +74,3 @@ export default function CourseListPage() {
     </div>
   )
 }
-// This page lists all courses and allows the user to add a new course.

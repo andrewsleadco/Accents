@@ -22,7 +22,7 @@ export default function AddCoursePage() {
     }
     const { error } = await supabase
       .from('courses')
-      .insert([{ name, description, creator_id: user.id }])
+      .insert([{ name, description, created_by: user.id }])
     if (error) {
       setError(error.message)
       setLoading(false)
